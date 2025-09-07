@@ -228,7 +228,7 @@ export default function Home() {
                   Build your LinkedIn presence and get noticed by employers
                 </p>
                 <p className="text-lg text-muted-foreground/80 mb-12">
-                  Daily posting challenge for CS students at MentiBY
+                  Daily posting challenge for students at MentiBY
                 </p>
                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
                   <Button size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" onClick={() => scrollToSection(1)} data-testid="button-start-challenge">
