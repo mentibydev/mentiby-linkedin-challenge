@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import heroImage from "@assets/generated_images/LinkedIn_networking_illustration_0bf02720.png";
+import studentsImage from "@assets/generated_images/Students_posting_on_LinkedIn_e4f60e13.png";
 import { 
   Calendar, 
   Users, 
@@ -152,27 +154,38 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative py-24 lg:py-32">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5"></div>
-        <div className="relative max-w-6xl mx-auto px-6 text-center">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-8 leading-tight">
-              MentiBY LinkedIn Challenge
-            </h1>
-            <p className="text-2xl sm:text-3xl text-muted-foreground mb-6 font-light">
-              Build your LinkedIn presence and get noticed by employers
-            </p>
-            <p className="text-lg text-muted-foreground/80 mb-12 max-w-2xl mx-auto">
-              Daily posting challenge for CS students at MentiBY
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button size="lg" className="h-14 px-8 text-lg" data-testid="button-start-challenge">
-                Start Challenge
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button variant="outline" size="lg" className="h-14 px-8 text-lg" data-testid="button-view-templates">
-                View Templates
-              </Button>
+      <section className="relative py-24 lg:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10"></div>
+        <div className="absolute inset-0 bg-dot-pattern opacity-5"></div>
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="text-center lg:text-left">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-8 leading-tight animate-fade-in">
+                MentiBY LinkedIn Challenge
+              </h1>
+              <p className="text-2xl sm:text-3xl text-muted-foreground mb-6 font-light">
+                Build your LinkedIn presence and get noticed by employers
+              </p>
+              <p className="text-lg text-muted-foreground/80 mb-12">
+                Daily posting challenge for CS students at MentiBY
+              </p>
+              <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+                <Button size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" data-testid="button-start-challenge">
+                  Start Challenge
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+                <Button variant="outline" size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" data-testid="button-view-templates">
+                  View Templates
+                </Button>
+              </div>
+            </div>
+            <div className="relative hidden lg:block">
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-3xl"></div>
+              <img 
+                src={heroImage} 
+                alt="Professional networking on LinkedIn" 
+                className="rounded-3xl shadow-2xl w-full h-auto animate-float"
+              />
             </div>
           </div>
         </div>
@@ -180,16 +193,17 @@ export default function Home() {
 
 
       {/* Rules Section */}
-      <section id="rules" className="py-20">
-        <div className="max-w-5xl mx-auto px-6">
+      <section id="rules" className="py-20 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent"></div>
+        <div className="relative max-w-5xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-foreground mb-4">Challenge Rules</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-4 animate-fade-in">Challenge Rules</h2>
             <p className="text-muted-foreground">Simple guidelines to maximize your success</p>
           </div>
           
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Rule 1: Daily Posting */}
-            <Card className="p-6 border-l-4 border-l-primary">
+            <Card className="p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
               <CardContent className="p-0">
                 <div className="flex items-start space-x-4">
                   <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -218,7 +232,7 @@ export default function Home() {
             </Card>
 
             {/* Rule 2: Engagement */}
-            <Card className="p-6 border-l-4 border-l-primary">
+            <Card className="p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
               <CardContent className="p-0">
                 <div className="flex items-start space-x-4">
                   <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -243,7 +257,7 @@ export default function Home() {
             </Card>
 
             {/* Rule 3: Sample Posts */}
-            <Card className="p-6 border-l-4 border-l-primary">
+            <Card className="p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
               <CardContent className="p-0">
                 <div className="flex items-start space-x-4">
                   <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -268,7 +282,7 @@ export default function Home() {
             </Card>
 
             {/* Rule 4: Rewards */}
-            <Card className="p-6 border-l-4 border-l-primary">
+            <Card className="p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
               <CardContent className="p-0">
                 <div className="flex items-start space-x-4">
                   <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -296,10 +310,11 @@ export default function Home() {
       </section>
 
       {/* Templates Section */}
-      <section id="templates" className="py-20 bg-muted/30">
+      <section id="templates" className="py-20 bg-muted/30 relative overflow-hidden">
+        <div className="absolute inset-0 bg-wave-pattern opacity-5"></div>
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">Post Templates</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-4 animate-fade-in">Post Templates</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Never run out of content ideas! Browse our curated collection and copy templates to your clipboard.
             </p>
@@ -326,7 +341,7 @@ export default function Home() {
           {/* Templates Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPosts.map((post) => (
-              <Card key={post.id} className="p-6 hover:shadow-lg transition-shadow" data-testid={`card-post-${post.id}`}>
+              <Card key={post.id} className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group bg-card/95 backdrop-blur" data-testid={`card-post-${post.id}`}>
                 <CardContent className="p-0">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
@@ -366,16 +381,29 @@ export default function Home() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 bg-primary text-primary-foreground">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Career?</h2>
-          <p className="text-xl mb-8 opacity-90">
-            Join students who are building their professional presence on LinkedIn
-          </p>
-          <Button size="lg" variant="secondary" className="h-14 px-8 text-lg" data-testid="button-start-today">
-            Start Your Challenge Today
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent"></div>
+        <div className="absolute inset-0 bg-dot-pattern opacity-10"></div>
+        <div className="relative max-w-5xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="text-center lg:text-left">
+              <h2 className="text-3xl font-bold mb-4 text-white animate-fade-in">Ready to Level Up Your Career?</h2>
+              <p className="text-xl mb-8 text-white/90">
+                Join hundreds of MentiBY students already building their professional network
+              </p>
+              <Button size="lg" variant="secondary" className="h-14 px-8 text-lg hover:scale-105 transition-transform" data-testid="button-start-today">
+                Start Your Challenge Today
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </div>
+            <div className="relative hidden lg:block">
+              <img 
+                src={studentsImage} 
+                alt="Students succeeding with LinkedIn" 
+                className="rounded-2xl shadow-2xl w-full h-auto"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
