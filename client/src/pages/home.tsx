@@ -192,6 +192,30 @@ export default function Home() {
       </section>
 
 
+      {/* Stats Section */}
+      <section className="py-16 bg-muted/20">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-8 text-center">
+            <div className="group">
+              <div className="text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">500+</div>
+              <p className="text-muted-foreground">Active Students</p>
+            </div>
+            <div className="group">
+              <div className="text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">15K+</div>
+              <p className="text-muted-foreground">Posts Created</p>
+            </div>
+            <div className="group">
+              <div className="text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">89%</div>
+              <p className="text-muted-foreground">Got Internships</p>
+            </div>
+            <div className="group">
+              <div className="text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">30+</div>
+              <p className="text-muted-foreground">Days Average Streak</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Rules Section */}
       <section id="rules" className="py-20 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent"></div>
