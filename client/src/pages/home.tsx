@@ -182,7 +182,7 @@ export default function Home() {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">LC</span>
+                <span className="text-white font-bold text-sm">MBY</span>
               </div>
               <span className="text-xl font-bold text-foreground">MentiBY LinkedIn Challenge</span>
             </div>
