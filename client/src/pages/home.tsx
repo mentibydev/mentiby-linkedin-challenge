@@ -138,7 +138,7 @@ export default function Home() {
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">LC</span>
               </div>
-              <span className="text-xl font-bold text-foreground">LinkedIn Challenge</span>
+              <span className="text-xl font-bold text-foreground">MentiBY LinkedIn Challenge</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <a href="#rules" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Rules</a>
@@ -157,7 +157,7 @@ export default function Home() {
         <div className="relative max-w-6xl mx-auto px-6 text-center">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-8 leading-tight">
-              LinkedIn Challenge
+              MentiBY LinkedIn Challenge
             </h1>
             <p className="text-2xl sm:text-3xl text-muted-foreground mb-6 font-light">
               Build your LinkedIn presence and get noticed by employers
@@ -387,7 +387,7 @@ export default function Home() {
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">LC</span>
               </div>
-              <span className="text-lg font-bold text-foreground">LinkedIn Challenge</span>
+              <span className="text-lg font-bold text-foreground">MentiBY LinkedIn Challenge</span>
             </div>
             <p className="text-muted-foreground text-sm text-center md:text-right">
               © 2025 MentiBY LinkedIn Challenge. Empowering students to build professional networks.
