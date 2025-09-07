@@ -160,10 +160,10 @@ export default function Home() {
               LinkedIn Challenge
             </h1>
             <p className="text-2xl sm:text-3xl text-muted-foreground mb-6 font-light">
-              Transform your professional presence and unlock career opportunities
+              Build your LinkedIn presence and get noticed by employers
             </p>
             <p className="text-lg text-muted-foreground/80 mb-12 max-w-2xl mx-auto">
-              A complete guide for Computer Science students
+              Daily posting challenge for CS students at MentiBY
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Button size="lg" className="h-14 px-8 text-lg" data-testid="button-start-challenge">
