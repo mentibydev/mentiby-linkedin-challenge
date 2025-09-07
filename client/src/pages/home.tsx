@@ -11,21 +11,13 @@ import {
   Edit, 
   Heart, 
   FileText, 
-  Award, 
   Search, 
   Copy, 
-  Plus, 
-  UserPlus,
-  CheckCircle,
-  Rocket,
-  Play,
   Check,
-  ThumbsUp,
-  Bug,
-  Lightbulb,
-  Mountain,
-  Repeat2,
-  Gift
+  ArrowRight,
+  BookOpen,
+  Target,
+  Star
 } from "lucide-react";
 
 interface SamplePost {
@@ -232,12 +224,6 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filteredPosts, setFilteredPosts] = useState(samplePosts);
-  const [streak, setStreak] = useState(0);
-  const [connections, setConnections] = useState(0);
-  const [engagement, setEngagement] = useState(0);
-  const [dailyConnectionGoal, setDailyConnectionGoal] = useState(0);
-  const [dailyEngagementGoal, setDailyEngagementGoal] = useState(0);
-  const [hasPostedToday, setHasPostedToday] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -274,33 +260,6 @@ export default function Home() {
     }
   };
 
-  const incrementStreak = () => {
-    setStreak(prev => prev + 1);
-    setHasPostedToday(true);
-    toast({
-      title: "Great job! 🎉",
-      description: "Your posting streak has been updated!",
-    });
-  };
-
-  const incrementConnections = () => {
-    setConnections(prev => prev + 1);
-    setDailyConnectionGoal(prev => prev + 1);
-    toast({
-      title: "Connection added!",
-      description: "Keep building your professional network!",
-    });
-  };
-
-  const incrementEngagement = () => {
-    setEngagement(prev => prev + 1);
-    setDailyEngagementGoal(prev => prev + 1);
-    toast({
-      title: "Engagement tracked!",
-      description: "Great job staying active in the community!",
-    });
-  };
-
   const categories = [
     { id: "all", label: "All" },
     { id: "learning", label: "Learning" },
@@ -312,20 +271,20 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Navigation */}
-      <nav className="bg-card shadow-sm border-b border-border sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="bg-card/80 backdrop-blur-sm border-b border-border/10 sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
-                <span className="text-white font-bold text-sm">Li</span>
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">LM</span>
               </div>
-              <span className="text-xl font-bold text-foreground">LinkedIn Challenge</span>
+              <span className="text-xl font-bold text-foreground">LinkedInMastery</span>
             </div>
-            <div className="hidden md:flex items-center space-x-6">
-              <a href="#rules" className="text-muted-foreground hover:text-primary transition-colors">Rules</a>
-              <a href="#samples" className="text-muted-foreground hover:text-primary transition-colors">Sample Posts</a>
-              <a href="#progress" className="text-muted-foreground hover:text-primary transition-colors">Progress</a>
-              <Button data-testid="button-get-started">
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">About</a>
+              <a href="#rules" className="text-muted-foreground hover:text-foreground transition-colors">Rules</a>
+              <a href="#templates" className="text-muted-foreground hover:text-foreground transition-colors">Templates</a>
+              <Button size="sm" data-testid="button-get-started">
                 Get Started
               </Button>
             </div>
@@ -334,27 +293,27 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="gradient-bg py-20 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6">
-              Transform Your Professional Presence
+      <section className="relative py-24 lg:py-32">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5"></div>
+        <div className="relative max-w-6xl mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-8 leading-tight">
+              LinkedInMastery
             </h1>
-            <p className="text-xl text-primary-foreground/90 mb-8 max-w-3xl mx-auto">
-              Join the daily LinkedIn challenge and build a strong professional network. Share your learning journey, connect with industry professionals, and unlock career opportunities.
+            <p className="text-2xl sm:text-3xl text-muted-foreground mb-6 font-light">
+              Transform your professional presence and unlock career opportunities
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-card hover:bg-secondary text-foreground shadow-lg" data-testid="button-start-challenge">
-                <Rocket className="mr-2 h-4 w-4" />
-                Start Challenge
+            <p className="text-lg text-muted-foreground/80 mb-12 max-w-2xl mx-auto">
+              A complete guide for Computer Science students
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Button size="lg" className="h-14 px-8 text-lg" data-testid="button-start-learning">
+                Start Learning
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button variant="outline" size="lg" className="border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary" data-testid="button-learn-more">
-                <Play className="mr-2 h-4 w-4" />
-                Learn More
+              <Button variant="outline" size="lg" className="h-14 px-8 text-lg" data-testid="button-view-templates">
+                View Templates
               </Button>
-            </div>
-            <div className="mt-12 text-primary-foreground/80">
-              <p className="text-sm">Challenge starts: <span className="font-semibold">September 7, 2025</span></p>
             </div>
           </div>
         </div>
