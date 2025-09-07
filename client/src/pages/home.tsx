@@ -11,7 +11,6 @@ import {
   Edit, 
   Heart, 
   FileText, 
-  Search, 
   Copy, 
   Check,
   ArrowRight,
@@ -92,7 +91,6 @@ const samplePosts: SamplePost[] = [
 ];
 
 export default function Home() {
-  const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filteredPosts, setFilteredPosts] = useState(samplePosts);
   const { toast } = useToast();
@@ -104,16 +102,8 @@ export default function Home() {
       filtered = filtered.filter(post => post.category === selectedCategory);
     }
     
-    if (searchTerm) {
-      filtered = filtered.filter(post =>
-        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.template.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-    
     setFilteredPosts(filtered);
-  }, [searchTerm, selectedCategory]);
+  }, [selectedCategory]);
 
   const copyToClipboard = async (template: string) => {
     try {
@@ -315,19 +305,8 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Search and Filter */}
+          {/* Filter */}
           <div className="mb-8">
-            <div className="max-w-md mx-auto relative mb-6">
-              <Input
-                type="text"
-                placeholder="Search templates..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-12"
-                data-testid="input-search-posts"
-              />
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            </div>
             <div className="flex flex-wrap justify-center gap-2">
               {categories.map((category) => (
                 <Button
