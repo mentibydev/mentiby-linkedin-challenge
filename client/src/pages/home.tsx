@@ -24,7 +24,9 @@ import {
   Award,
   Lightbulb,
   ChevronRight,
-  ChevronLeft
+  ChevronLeft,
+  Menu,
+  X
 } from "lucide-react";
 
 interface SamplePost {
@@ -98,6 +100,7 @@ export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filteredPosts, setFilteredPosts] = useState(samplePosts);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   // Load saved data from localStorage on initial mount
   const [completedDays, setCompletedDays] = useState<number[]>(() => {
     const saved = localStorage.getItem('mby-completed-days');
@@ -210,12 +213,14 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-b border-border/50 z-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">MBY</span>
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-white font-bold text-xs sm:text-sm">MBY</span>
               </div>
-              <span className="text-xl font-bold text-foreground">MentiBY LinkedIn Challenge</span>
+              <span className="text-sm sm:text-xl font-bold text-foreground truncate">MentiBY LinkedIn Challenge</span>
             </div>
+            
+            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               <button onClick={() => scrollToSection(0)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Home</button>
               <button onClick={() => scrollToSection(1)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Action Plan</button>
@@ -226,9 +231,63 @@ export default function Home() {
                 Get Started
               </Button>
             </div>
+            
+            {/* Mobile Menu Button */}
+            <button 
+              className="md:hidden p-2" 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              data-testid="button-mobile-menu"
+            >
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
           </div>
         </div>
       </nav>
+      
+      {/* Mobile Navigation Menu */}
+      {mobileMenuOpen && (
+        <div className="fixed top-16 left-0 right-0 bg-background/95 backdrop-blur-sm border-b border-border/50 z-40 md:hidden">
+          <div className="px-6 py-4 space-y-2">
+            <button 
+              onClick={() => { scrollToSection(0); setMobileMenuOpen(false); }} 
+              className="block w-full text-left py-2 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Home
+            </button>
+            <button 
+              onClick={() => { scrollToSection(1); setMobileMenuOpen(false); }} 
+              className="block w-full text-left py-2 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Action Plan
+            </button>
+            <button 
+              onClick={() => { scrollToSection(2); setMobileMenuOpen(false); }} 
+              className="block w-full text-left py-2 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Rules
+            </button>
+            <button 
+              onClick={() => { scrollToSection(3); setMobileMenuOpen(false); }} 
+              className="block w-full text-left py-2 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Templates
+            </button>
+            <button 
+              onClick={() => { scrollToSection(4); setMobileMenuOpen(false); }} 
+              className="block w-full text-left py-2 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Tracker
+            </button>
+            <Button 
+              className="w-full" 
+              onClick={() => { scrollToSection(5); setMobileMenuOpen(false); }} 
+              data-testid="button-mobile-get-started"
+            >
+              Get Started
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Horizontal Scroll Container */}
       <div 
@@ -251,21 +310,32 @@ export default function Home() {
           <div className="relative max-w-7xl mx-auto px-6 w-full">
             <div className="flex items-center justify-center">
               <div className="text-center max-w-4xl">
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-8 leading-tight animate-fade-in">
+                <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-foreground mb-4 sm:mb-8 leading-tight animate-fade-in">
                   MentiBY LinkedIn Challenge
                 </h1>
-                <p className="text-2xl sm:text-3xl text-muted-foreground mb-6 font-light">
+                <p className="text-lg sm:text-2xl lg:text-3xl text-muted-foreground mb-4 sm:mb-6 font-light">
                   Build your LinkedIn presence and get noticed by employers
                 </p>
-                <p className="text-lg text-muted-foreground/80 mb-12">
+                <p className="text-sm sm:text-lg text-muted-foreground/80 mb-8 sm:mb-12">
                   Daily posting challenge for students at MentiBY
                 </p>
                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                  <Button size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" onClick={() => scrollToSection(1)} data-testid="button-start-challenge">
+                  <Button 
+                    size="lg" 
+                    className="h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg hover:scale-105 transition-transform" 
+                    onClick={() => scrollToSection(1)} 
+                    data-testid="button-start-challenge"
+                  >
                     Start Challenge
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-4 sm:h-5 w-4 sm:w-5" />
                   </Button>
-                  <Button variant="outline" size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" onClick={() => scrollToSection(3)} data-testid="button-view-templates">
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                    className="h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg hover:scale-105 transition-transform" 
+                    onClick={() => scrollToSection(3)} 
+                    data-testid="button-view-templates"
+                  >
                     View Templates
                   </Button>
                 </div>
@@ -277,28 +347,28 @@ export default function Home() {
         {/* Section 2: LinkedIn Action Plan */}
         <section className="min-w-full h-full flex items-center justify-center bg-muted/10 relative" style={{ scrollSnapAlign: 'start' }}>
           <div className="absolute inset-0 bg-dot-pattern opacity-5"></div>
-          <div className="max-w-6xl mx-auto px-6 w-full py-16">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-foreground mb-4 animate-fade-in">Your LinkedIn Action Plan</h2>
-              <p className="text-lg text-muted-foreground">Complete these tasks to build your professional presence</p>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full py-8 sm:py-16">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-4xl font-bold text-foreground mb-2 sm:mb-4 animate-fade-in">Your LinkedIn Action Plan</h2>
+              <p className="text-sm sm:text-lg text-muted-foreground">Complete these tasks to build your professional presence</p>
             </div>
             
-            <div className="grid lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 overflow-y-auto max-h-[calc(100vh-200px)]">
               {/* Profile Setup */}
-              <Card className="p-6 bg-card/95 backdrop-blur border-2 hover:shadow-xl transition-all duration-300">
+              <Card className="p-4 sm:p-6 bg-card/95 backdrop-blur border-2 hover:shadow-xl transition-all duration-300">
                 <CardContent className="p-0">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <User className="h-5 w-5 text-primary" />
+                  <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <User className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold">Profile Setup</h3>
+                      <h3 className="text-base sm:text-lg font-semibold">Profile Setup</h3>
                       <p className="text-xs text-muted-foreground">
                         {profileTasks.filter(t => t).length}/6 completed ({Math.round((profileTasks.filter(t => t).length / 6) * 100)}%)
                       </p>
                     </div>
                   </div>
-                  <div className="w-full bg-muted rounded-full h-2 mb-6">
+                  <div className="w-full bg-muted rounded-full h-2 mb-4 sm:mb-6">
                     <div className="bg-primary h-2 rounded-full transition-all duration-300" 
                          style={{width: `${(profileTasks.filter(t => t).length / 6) * 100}%`}}></div>
                   </div>
@@ -330,20 +400,20 @@ export default function Home() {
               </Card>
 
               {/* Connection Building */}
-              <Card className="p-6 bg-card/95 backdrop-blur border-2 hover:shadow-xl transition-all duration-300">
+              <Card className="p-4 sm:p-6 bg-card/95 backdrop-blur border-2 hover:shadow-xl transition-all duration-300">
                 <CardContent className="p-0">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Users className="h-5 w-5 text-primary" />
+                  <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Users className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold">Connection Building</h3>
+                      <h3 className="text-base sm:text-lg font-semibold">Connection Building</h3>
                       <p className="text-xs text-muted-foreground">
                         {connectionTasks.filter(t => t).length}/6 completed ({Math.round((connectionTasks.filter(t => t).length / 6) * 100)}%)
                       </p>
                     </div>
                   </div>
-                  <div className="w-full bg-muted rounded-full h-2 mb-6">
+                  <div className="w-full bg-muted rounded-full h-2 mb-4 sm:mb-6">
                     <div className="bg-primary h-2 rounded-full transition-all duration-300" 
                          style={{width: `${(connectionTasks.filter(t => t).length / 6) * 100}%`}}></div>
                   </div>
@@ -375,20 +445,20 @@ export default function Home() {
               </Card>
 
               {/* Content Posting */}
-              <Card className="p-6 bg-card/95 backdrop-blur border-2 hover:shadow-xl transition-all duration-300">
+              <Card className="p-4 sm:p-6 bg-card/95 backdrop-blur border-2 hover:shadow-xl transition-all duration-300">
                 <CardContent className="p-0">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Edit className="h-5 w-5 text-primary" />
+                  <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Edit className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold">Content Posting</h3>
+                      <h3 className="text-base sm:text-lg font-semibold">Content Posting</h3>
                       <p className="text-xs text-muted-foreground">
                         {contentTasks.filter(t => t).length}/6 completed ({Math.round((contentTasks.filter(t => t).length / 6) * 100)}%)
                       </p>
                     </div>
                   </div>
-                  <div className="w-full bg-muted rounded-full h-2 mb-6">
+                  <div className="w-full bg-muted rounded-full h-2 mb-4 sm:mb-6">
                     <div className="bg-primary h-2 rounded-full transition-all duration-300" 
                          style={{width: `${(contentTasks.filter(t => t).length / 6) * 100}%`}}></div>
                   </div>
@@ -426,21 +496,21 @@ export default function Home() {
         <section className="min-w-full h-full flex items-center justify-center relative" style={{ scrollSnapAlign: 'start' }}>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent"></div>
           <div className="relative max-w-5xl mx-auto px-6 w-full flex flex-col justify-center h-full py-20">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-foreground mb-4 animate-fade-in">Challenge Rules</h2>
-              <p className="text-lg text-muted-foreground">Simple guidelines to maximize your success</p>
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-4xl font-bold text-foreground mb-2 sm:mb-4 animate-fade-in">Challenge Rules</h2>
+              <p className="text-sm sm:text-lg text-muted-foreground">Simple guidelines to maximize your success</p>
             </div>
             
-            <div className="grid lg:grid-cols-2 gap-6 max-h-[55vh] overflow-y-auto px-4 pb-12">
+            <div className="grid md:grid-cols-2 gap-4 sm:gap-6 max-h-[60vh] overflow-y-auto px-2 sm:px-4 pb-8 sm:pb-12">
               {/* Rule 1: Daily Posting */}
-              <Card className="p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+              <Card className="p-4 sm:p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
                 <CardContent className="p-0">
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Edit className="text-primary h-6 w-6" />
+                  <div className="flex items-start space-x-3 sm:space-x-4">
+                    <div className="bg-primary/10 w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Edit className="text-primary h-5 w-5 sm:h-6 sm:w-6" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-semibold text-foreground mb-3">1️⃣ Daily Posting</h3>
+                      <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2 sm:mb-3">1️⃣ Daily Posting</h3>
                       <p className="text-muted-foreground mb-4">Post 1 update daily on LinkedIn</p>
                       <div className="space-y-2">
                         <div className="flex items-center space-x-2">
@@ -543,9 +613,9 @@ export default function Home() {
         <section className="min-w-full h-full flex items-center justify-center bg-muted/30 relative overflow-hidden" style={{ scrollSnapAlign: 'start' }}>
           <div className="absolute inset-0 bg-wave-pattern opacity-5"></div>
           <div className="max-w-6xl mx-auto px-6 w-full">
-            <div className="text-center mb-8">
-              <h2 className="text-4xl font-bold text-foreground mb-4 animate-fade-in">Post Templates</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <div className="text-center mb-6 sm:mb-8 px-4">
+              <h2 className="text-2xl sm:text-4xl font-bold text-foreground mb-2 sm:mb-4 animate-fade-in">Post Templates</h2>
+              <p className="text-sm sm:text-lg text-muted-foreground max-w-2xl mx-auto">
                 Never run out of content ideas! Browse our curated collection and copy templates to your clipboard.
               </p>
             </div>
@@ -569,7 +639,7 @@ export default function Home() {
             </div>
 
             {/* Templates Grid - Scrollable */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[50vh] overflow-y-auto px-2">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 max-h-[55vh] overflow-y-auto px-4 sm:px-2">
               {filteredPosts.map((post) => (
                 <Card key={post.id} className="p-4 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group bg-card/95 backdrop-blur" data-testid={`card-post-${post.id}`}>
                   <CardContent className="p-0">
@@ -610,10 +680,10 @@ export default function Home() {
         {/* Section 5: 21-Day Progress Tracker */}
         <section className="min-w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/5 to-accent/5 relative" style={{ scrollSnapAlign: 'start' }}>
           <div className="absolute inset-0 bg-wave-pattern opacity-5"></div>
-          <div className="max-w-6xl mx-auto px-6 w-full py-16">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-foreground mb-4 animate-fade-in">21-Day Challenge Tracker</h2>
-              <p className="text-lg text-muted-foreground">Track your daily posts and build consistency</p>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full py-8 sm:py-16">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-4xl font-bold text-foreground mb-2 sm:mb-4 animate-fade-in">21-Day Challenge Tracker</h2>
+              <p className="text-sm sm:text-lg text-muted-foreground">Track your daily posts and build consistency</p>
               <div className="mt-6 inline-flex items-center gap-4 bg-card/95 backdrop-blur px-6 py-3 rounded-full shadow-lg">
                 <span className="text-sm font-medium">Current Streak:</span>
                 <span className="text-2xl font-bold text-primary">{completedDays.length} days</span>
@@ -621,16 +691,16 @@ export default function Home() {
             </div>
             
             {/* Calendar Grid */}
-            <Card className="p-8 bg-card/95 backdrop-blur shadow-xl">
+            <Card className="p-4 sm:p-8 bg-card/95 backdrop-blur shadow-xl">
               <CardContent className="p-0">
-                <div className="grid grid-cols-7 gap-3 mb-6">
+                <div className="grid grid-cols-7 gap-1 sm:gap-3 mb-4 sm:mb-6">
                   {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
                     <div key={day} className="text-center text-sm font-semibold text-muted-foreground">
                       {day}
                     </div>
                   ))}
                 </div>
-                <div className="grid grid-cols-7 gap-3">
+                <div className="grid grid-cols-7 gap-1 sm:gap-3">
                   {Array.from({ length: 21 }, (_, i) => i + 1).map(day => {
                     const isCompleted = completedDays.includes(day);
                     const today = completedDays.length + 1 === day && completedDays.length > 0;
@@ -639,7 +709,7 @@ export default function Home() {
                       <div
                         key={day}
                         onClick={() => toggleDay(day)}
-                        className={`aspect-square border-2 rounded-lg flex flex-col items-center justify-center transition-all cursor-pointer group ${
+                        className={`aspect-square border sm:border-2 rounded-md sm:rounded-lg flex flex-col items-center justify-center transition-all cursor-pointer group ${
                           isCompleted 
                             ? 'bg-primary border-primary text-white hover:bg-primary/90' 
                             : today 
@@ -647,14 +717,14 @@ export default function Home() {
                               : 'border-dashed border-muted-foreground/20 hover:border-primary/50'
                         }`}
                       >
-                        <span className={`text-lg font-semibold ${
+                        <span className={`text-xs sm:text-lg font-semibold ${
                           isCompleted ? 'text-white' : 'text-muted-foreground group-hover:text-primary'
-                        }`}>Day</span>
-                        <span className={`text-2xl font-bold ${
+                        } ${day > 9 ? 'hidden sm:block' : ''}`}>Day</span>
+                        <span className={`text-sm sm:text-2xl font-bold ${
                           isCompleted ? 'text-white' : 'text-muted-foreground/50 group-hover:text-primary'
                         }`}>{day}</span>
                         {isCompleted && (
-                          <Check className="h-5 w-5 text-white mt-1" />
+                          <Check className="h-3 w-3 sm:h-5 sm:w-5 text-white mt-0 sm:mt-1" />
                         )}
                       </div>
                     );
@@ -705,26 +775,26 @@ export default function Home() {
           <div className="relative max-w-5xl mx-auto px-6 w-full">
             <div className="flex items-center justify-center">
               <div className="text-center max-w-4xl">
-                <h2 className="text-5xl font-bold mb-4 text-white animate-fade-in">Complete the 21-Day Challenge</h2>
-                <p className="text-2xl mb-10 text-white/90">
+                <h2 className="text-3xl sm:text-5xl font-bold mb-2 sm:mb-4 text-white animate-fade-in">Complete the 21-Day Challenge</h2>
+                <p className="text-lg sm:text-2xl mb-6 sm:mb-10 text-white/90">
                   Win Amazing Rewards!
                 </p>
                 
-                <div className="grid md:grid-cols-3 gap-6 mb-12">
-                  <div className="bg-white/10 backdrop-blur rounded-xl p-6 hover:bg-white/20 transition-all">
-                    <div className="text-3xl mb-3">📈</div>
-                    <h3 className="text-xl font-bold text-white mb-2">Profile Impressions</h3>
-                    <p className="text-white/80">Get noticed by recruiters and expand your professional reach</p>
+                <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 sm:p-6 hover:bg-white/20 transition-all">
+                    <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">📈</div>
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">Profile Impressions</h3>
+                    <p className="text-sm sm:text-base text-white/80">Get noticed by recruiters and expand your professional reach</p>
                   </div>
-                  <div className="bg-white/10 backdrop-blur rounded-xl p-6 hover:bg-white/20 transition-all">
-                    <div className="text-3xl mb-3">🎁</div>
-                    <h3 className="text-xl font-bold text-white mb-2">Exclusive Goodies</h3>
-                    <p className="text-white/80">Receive MentiBY branded swag and merchandise</p>
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 sm:p-6 hover:bg-white/20 transition-all">
+                    <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">🎁</div>
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">Exclusive Goodies</h3>
+                    <p className="text-sm sm:text-base text-white/80">Receive MentiBY branded swag and merchandise</p>
                   </div>
-                  <div className="bg-white/10 backdrop-blur rounded-xl p-6 hover:bg-white/20 transition-all">
-                    <div className="text-3xl mb-3">💳</div>
-                    <h3 className="text-xl font-bold text-white mb-2">Amazon Vouchers</h3>
-                    <p className="text-white/80">Win vouchers for top performers who complete 21 days</p>
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 sm:p-6 hover:bg-white/20 transition-all">
+                    <div className="text-2xl sm:text-3xl mb-2 sm:mb-3">💳</div>
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">Amazon Vouchers</h3>
+                    <p className="text-sm sm:text-base text-white/80">Win vouchers for top performers who complete 21 days</p>
                   </div>
                 </div>
                 
@@ -749,16 +819,16 @@ export default function Home() {
       </div>
 
       {/* Navigation Dots */}
-      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
-        <div className="flex space-x-3">
+      <div className="fixed bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-50">
+        <div className="flex space-x-2 sm:space-x-3">
           {sections.map((_, index) => (
             <button
               key={index}
               onClick={() => scrollToSection(index)}
-              className={`h-3 rounded-full transition-all duration-300 ring-2 ring-white/30 ${
+              className={`h-2 sm:h-3 rounded-full transition-all duration-300 ring-2 ring-white/30 ${
                 currentSection === index 
-                  ? 'bg-primary w-8 ring-primary' 
-                  : 'bg-white/60 hover:bg-white/80 w-3'
+                  ? 'bg-primary w-6 sm:w-8 ring-primary' 
+                  : 'bg-white/60 hover:bg-white/80 w-2 sm:w-3'
               }`}
               style={{
                 boxShadow: '0 4px 20px rgba(0, 0, 0, 0.8)'
