@@ -98,14 +98,44 @@ export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filteredPosts, setFilteredPosts] = useState(samplePosts);
-  const [completedDays, setCompletedDays] = useState<number[]>([]);
-  const [profileTasks, setProfileTasks] = useState<boolean[]>([false, false, false, false, false, false]);
-  const [connectionTasks, setConnectionTasks] = useState<boolean[]>([false, false, false, false, false, false]);
-  const [contentTasks, setContentTasks] = useState<boolean[]>([false, false, false, false, false, false]);
+  // Load saved data from localStorage on initial mount
+  const [completedDays, setCompletedDays] = useState<number[]>(() => {
+    const saved = localStorage.getItem('mby-completed-days');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [profileTasks, setProfileTasks] = useState<boolean[]>(() => {
+    const saved = localStorage.getItem('mby-profile-tasks');
+    return saved ? JSON.parse(saved) : [false, false, false, false, false, false];
+  });
+  const [connectionTasks, setConnectionTasks] = useState<boolean[]>(() => {
+    const saved = localStorage.getItem('mby-connection-tasks');
+    return saved ? JSON.parse(saved) : [false, false, false, false, false, false];
+  });
+  const [contentTasks, setContentTasks] = useState<boolean[]>(() => {
+    const saved = localStorage.getItem('mby-content-tasks');
+    return saved ? JSON.parse(saved) : [false, false, false, false, false, false];
+  });
   const containerRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
   const sections = ["home", "action-plan", "rules", "templates", "tracker", "cta"];
+
+  // Save progress to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('mby-completed-days', JSON.stringify(completedDays));
+  }, [completedDays]);
+
+  useEffect(() => {
+    localStorage.setItem('mby-profile-tasks', JSON.stringify(profileTasks));
+  }, [profileTasks]);
+
+  useEffect(() => {
+    localStorage.setItem('mby-connection-tasks', JSON.stringify(connectionTasks));
+  }, [connectionTasks]);
+
+  useEffect(() => {
+    localStorage.setItem('mby-content-tasks', JSON.stringify(contentTasks));
+  }, [contentTasks]);
 
   useEffect(() => {
     let filtered = samplePosts;
