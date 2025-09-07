@@ -413,23 +413,45 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent"></div>
           <div className="absolute inset-0 bg-dot-pattern opacity-10"></div>
           <div className="relative max-w-5xl mx-auto px-6 w-full">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="text-center lg:text-left">
-                <h2 className="text-4xl font-bold mb-6 text-white animate-fade-in">Ready to Level Up Your Career?</h2>
-                <p className="text-xl mb-8 text-white/90">
-                  Join hundreds of MentiBY students already building their professional network
+            <div className="flex items-center justify-center">
+              <div className="text-center max-w-4xl">
+                <h2 className="text-5xl font-bold mb-4 text-white animate-fade-in">Complete the 21-Day Challenge</h2>
+                <p className="text-2xl mb-10 text-white/90">
+                  Win Amazing Rewards!
                 </p>
-                <Button size="lg" variant="secondary" className="h-14 px-8 text-lg hover:scale-105 transition-transform" data-testid="button-start-today">
-                  Start Your Challenge Today
+                
+                <div className="grid md:grid-cols-3 gap-6 mb-12">
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-6 hover:bg-white/20 transition-all">
+                    <div className="text-3xl mb-3">📈</div>
+                    <h3 className="text-xl font-bold text-white mb-2">Profile Impressions</h3>
+                    <p className="text-white/80">Get noticed by recruiters and expand your professional reach</p>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-6 hover:bg-white/20 transition-all">
+                    <div className="text-3xl mb-3">🎁</div>
+                    <h3 className="text-xl font-bold text-white mb-2">Exclusive Goodies</h3>
+                    <p className="text-white/80">Receive MentiBY branded swag and merchandise</p>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-6 hover:bg-white/20 transition-all">
+                    <div className="text-3xl mb-3">💳</div>
+                    <h3 className="text-xl font-bold text-white mb-2">Amazon Vouchers</h3>
+                    <p className="text-white/80">Win vouchers for top performers who complete 21 days</p>
+                  </div>
+                </div>
+                
+                <p className="text-xl mb-8 text-white/90">
+                  Join hundreds of students who are transforming their careers
+                </p>
+                
+                <Button 
+                  size="lg" 
+                  variant="secondary" 
+                  className="h-14 px-8 text-lg hover:scale-105 transition-transform" 
+                  onClick={() => scrollToSection(1)}
+                  data-testid="button-start-today"
+                >
+                  View Challenge Rules
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </div>
-              <div className="relative hidden lg:block">
-                <img 
-                  src={studentsImage} 
-                  alt="Students succeeding with LinkedIn" 
-                  className="rounded-2xl shadow-2xl w-full h-auto"
-                />
               </div>
             </div>
           </div>
