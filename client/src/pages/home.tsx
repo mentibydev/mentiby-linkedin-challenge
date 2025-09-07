@@ -151,7 +151,6 @@ export default function Home() {
               <span className="text-xl font-bold text-foreground">LinkedIn Challenge</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors text-sm">About</a>
               <a href="#rules" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Rules</a>
               <a href="#templates" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Templates</a>
               <Button size="sm" data-testid="button-get-started">
@@ -189,39 +188,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 bg-muted/30">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-6">About the Challenge</h2>
-          <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
-            Join a transformative journey where you'll build your professional network, share your learning experiences, 
-            and connect with industry professionals through consistent LinkedIn engagement.
-          </p>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Calendar className="text-primary h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">Daily Commitment</h3>
-              <p className="text-muted-foreground">Post one meaningful update every day</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="text-primary h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">Network Building</h3>
-              <p className="text-muted-foreground">Connect with 5+ professionals daily</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Trophy className="text-primary h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">Recognition</h3>
-              <p className="text-muted-foreground">Best posts get featured for visibility</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Rules Section */}
       <section id="rules" className="py-20">
