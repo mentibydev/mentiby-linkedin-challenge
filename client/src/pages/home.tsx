@@ -100,7 +100,7 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
-  const sections = ["home", "stats", "rules", "templates", "cta"];
+  const sections = ["home", "rules", "templates", "cta"];
 
   useEffect(() => {
     let filtered = samplePosts;
@@ -169,9 +169,9 @@ export default function Home() {
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <button onClick={() => scrollToSection(0)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Home</button>
-              <button onClick={() => scrollToSection(2)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Rules</button>
-              <button onClick={() => scrollToSection(3)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Templates</button>
-              <Button size="sm" onClick={() => scrollToSection(4)} data-testid="button-get-started">
+              <button onClick={() => scrollToSection(1)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Rules</button>
+              <button onClick={() => scrollToSection(2)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Templates</button>
+              <Button size="sm" onClick={() => scrollToSection(3)} data-testid="button-get-started">
                 Get Started
               </Button>
             </div>
@@ -210,11 +210,11 @@ export default function Home() {
                   Daily posting challenge for CS students at MentiBY
                 </p>
                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                  <Button size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" onClick={() => scrollToSection(2)} data-testid="button-start-challenge">
+                  <Button size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" onClick={() => scrollToSection(1)} data-testid="button-start-challenge">
                     Start Challenge
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-                  <Button variant="outline" size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" onClick={() => scrollToSection(3)} data-testid="button-view-templates">
+                  <Button variant="outline" size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" onClick={() => scrollToSection(2)} data-testid="button-view-templates">
                     View Templates
                   </Button>
                 </div>
@@ -223,32 +223,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 2: Stats */}
-        <section className="min-w-full h-full flex items-center justify-center bg-muted/20" style={{ scrollSnapAlign: 'start' }}>
-          <div className="max-w-6xl mx-auto px-6 w-full">
-            <h2 className="text-4xl font-bold text-center mb-16 animate-fade-in">Our Impact</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-              <div className="group bg-card p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all">
-                <div className="text-5xl font-bold text-primary mb-4 group-hover:scale-110 transition-transform">500+</div>
-                <p className="text-lg text-muted-foreground">Active Students</p>
-              </div>
-              <div className="group bg-card p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all">
-                <div className="text-5xl font-bold text-primary mb-4 group-hover:scale-110 transition-transform">15K+</div>
-                <p className="text-lg text-muted-foreground">Posts Created</p>
-              </div>
-              <div className="group bg-card p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all">
-                <div className="text-5xl font-bold text-primary mb-4 group-hover:scale-110 transition-transform">89%</div>
-                <p className="text-lg text-muted-foreground">Got Internships</p>
-              </div>
-              <div className="group bg-card p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all">
-                <div className="text-5xl font-bold text-primary mb-4 group-hover:scale-110 transition-transform">30+</div>
-                <p className="text-lg text-muted-foreground">Days Average Streak</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 3: Rules */}
+        {/* Section 2: Rules */}
         <section className="min-w-full h-full flex items-center justify-center relative" style={{ scrollSnapAlign: 'start' }}>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent"></div>
           <div className="relative max-w-5xl mx-auto px-6 w-full">
@@ -365,7 +340,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 4: Templates */}
+        {/* Section 3: Templates */}
         <section className="min-w-full h-full flex items-center justify-center bg-muted/30 relative overflow-hidden" style={{ scrollSnapAlign: 'start' }}>
           <div className="absolute inset-0 bg-wave-pattern opacity-5"></div>
           <div className="max-w-6xl mx-auto px-6 w-full">
@@ -433,7 +408,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 5: Call to Action */}
+        {/* Section 4: Call to Action */}
         <section className="min-w-full h-full flex items-center justify-center relative overflow-hidden" style={{ scrollSnapAlign: 'start' }}>
           <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent"></div>
           <div className="absolute inset-0 bg-dot-pattern opacity-10"></div>
