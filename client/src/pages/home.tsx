@@ -467,9 +467,12 @@ export default function Home() {
               onClick={() => scrollToSection(index)}
               className={`h-3 rounded-full transition-all duration-300 ring-2 ring-white/30 ${
                 currentSection === index 
-                  ? 'bg-primary w-8 shadow-2xl ring-primary' 
-                  : 'bg-white/60 hover:bg-white/80 w-3 shadow-xl'
+                  ? 'bg-primary w-8 ring-primary' 
+                  : 'bg-white/60 hover:bg-white/80 w-3'
               }`}
+              style={{
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.8)'
+              }}
               aria-label={`Go to section ${index + 1}`}
             />
           ))}
