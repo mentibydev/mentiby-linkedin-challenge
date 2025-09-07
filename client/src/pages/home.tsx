@@ -198,8 +198,8 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10"></div>
           <div className="absolute inset-0 bg-dot-pattern opacity-5"></div>
           <div className="relative max-w-7xl mx-auto px-6 w-full">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="text-center lg:text-left">
+            <div className="flex items-center justify-center">
+              <div className="text-center max-w-4xl">
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-8 leading-tight animate-fade-in">
                   MentiBY LinkedIn Challenge
                 </h1>
@@ -209,7 +209,7 @@ export default function Home() {
                 <p className="text-lg text-muted-foreground/80 mb-12">
                   Daily posting challenge for CS students at MentiBY
                 </p>
-                <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+                <div className="flex flex-col sm:flex-row gap-6 justify-center">
                   <Button size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" onClick={() => scrollToSection(2)} data-testid="button-start-challenge">
                     Start Challenge
                     <ArrowRight className="ml-2 h-5 w-5" />
@@ -218,14 +218,6 @@ export default function Home() {
                     View Templates
                   </Button>
                 </div>
-              </div>
-              <div className="relative hidden lg:block">
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-3xl"></div>
-                <img 
-                  src={heroImage} 
-                  alt="Professional networking on LinkedIn" 
-                  className="rounded-3xl shadow-2xl w-full h-auto animate-float"
-                />
               </div>
             </div>
           </div>
