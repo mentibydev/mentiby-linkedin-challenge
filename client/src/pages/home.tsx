@@ -177,8 +177,8 @@ export default function Home() {
               A complete guide for Computer Science students
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button size="lg" className="h-14 px-8 text-lg" data-testid="button-start-learning">
-                Start Learning
+              <Button size="lg" className="h-14 px-8 text-lg" data-testid="button-start-challenge">
+                Start Challenge
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button variant="outline" size="lg" className="h-14 px-8 text-lg" data-testid="button-view-templates">
