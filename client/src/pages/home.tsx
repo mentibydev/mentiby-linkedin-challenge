@@ -460,15 +460,15 @@ export default function Home() {
 
       {/* Navigation Dots */}
       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
-        <div className="flex space-x-3 bg-gray-900/80 backdrop-blur-md px-6 py-3 rounded-full shadow-lg border border-gray-700">
+        <div className="flex space-x-3">
           {sections.map((_, index) => (
             <button
               key={index}
               onClick={() => scrollToSection(index)}
-              className={`h-3 rounded-full transition-all duration-300 ${
+              className={`h-3 rounded-full transition-all duration-300 ring-2 ring-white/30 ${
                 currentSection === index 
-                  ? 'bg-white w-8 shadow-md' 
-                  : 'bg-gray-400/50 hover:bg-gray-400/70 w-3'
+                  ? 'bg-primary w-8 shadow-lg ring-primary' 
+                  : 'bg-white/60 hover:bg-white/80 w-3 shadow-md'
               }`}
               aria-label={`Go to section ${index + 1}`}
             />
