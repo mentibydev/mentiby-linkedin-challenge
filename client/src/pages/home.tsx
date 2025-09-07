@@ -226,13 +226,13 @@ export default function Home() {
         {/* Section 2: Rules */}
         <section className="min-w-full h-full flex items-center justify-center relative" style={{ scrollSnapAlign: 'start' }}>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent"></div>
-          <div className="relative max-w-5xl mx-auto px-6 w-full">
+          <div className="relative max-w-5xl mx-auto px-6 w-full flex flex-col justify-center h-full py-20">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-foreground mb-4 animate-fade-in">Challenge Rules</h2>
               <p className="text-lg text-muted-foreground">Simple guidelines to maximize your success</p>
             </div>
             
-            <div className="grid lg:grid-cols-2 gap-6 max-h-[60vh] overflow-y-auto px-4">
+            <div className="grid lg:grid-cols-2 gap-6 max-h-[55vh] overflow-y-auto px-4 pb-12">
               {/* Rule 1: Daily Posting */}
               <Card className="p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
                 <CardContent className="p-0">
