@@ -98,6 +98,10 @@ export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filteredPosts, setFilteredPosts] = useState(samplePosts);
+  const [completedDays, setCompletedDays] = useState<number[]>([]);
+  const [profileTasks, setProfileTasks] = useState<boolean[]>([false, false, false, false, false, false]);
+  const [connectionTasks, setConnectionTasks] = useState<boolean[]>([false, false, false, false, false, false]);
+  const [contentTasks, setContentTasks] = useState<boolean[]>([false, false, false, false, false, false]);
   const containerRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -135,6 +139,20 @@ export default function Home() {
     { id: "coding", label: "Coding" },
     { id: "motivation", label: "Motivation" }
   ];
+
+  const toggleDay = (day: number) => {
+    setCompletedDays(prev => {
+      if (prev.includes(day)) {
+        return prev.filter(d => d !== day);
+      } else {
+        return [...prev, day];
+      }
+    });
+    toast({
+      title: `Day ${day} ${completedDays.includes(day) ? 'unmarked' : 'marked as complete'}!`,
+      description: completedDays.includes(day) ? 'Keep going!' : 'Great job on your consistency!',
+    });
+  };
 
   const scrollToSection = (index: number) => {
     if (containerRef.current) {
@@ -245,37 +263,38 @@ export default function Home() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold">Profile Setup</h3>
-                      <p className="text-xs text-muted-foreground">0/6 completed (0%)</p>
+                      <p className="text-xs text-muted-foreground">
+                        {profileTasks.filter(t => t).length}/6 completed ({Math.round((profileTasks.filter(t => t).length / 6) * 100)}%)
+                      </p>
                     </div>
                   </div>
                   <div className="w-full bg-muted rounded-full h-2 mb-6">
-                    <div className="bg-primary h-2 rounded-full" style={{width: '0%'}}></div>
+                    <div className="bg-primary h-2 rounded-full transition-all duration-300" 
+                         style={{width: `${(profileTasks.filter(t => t).length / 6) * 100}%`}}></div>
                   </div>
                   <div className="space-y-3">
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Upload a professional headshot photo</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Write a compelling headline with keywords</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Craft a detailed summary (3-4 paragraphs)</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Add your education and relevant coursework</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">List your technical skills and endorsements</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Add projects with descriptions and links</span>
-                    </label>
+                    {[
+                      "Upload a professional headshot photo",
+                      "Write a compelling headline with keywords",
+                      "Craft a detailed summary (3-4 paragraphs)",
+                      "Add your education and relevant coursework",
+                      "List your technical skills and endorsements",
+                      "Add projects with descriptions and links"
+                    ].map((task, index) => (
+                      <label key={index} className="flex items-start gap-3 cursor-pointer group">
+                        <input 
+                          type="checkbox" 
+                          className="mt-1 rounded border-muted-foreground" 
+                          checked={profileTasks[index]}
+                          onChange={() => {
+                            const newTasks = [...profileTasks];
+                            newTasks[index] = !newTasks[index];
+                            setProfileTasks(newTasks);
+                          }}
+                        />
+                        <span className="text-sm group-hover:text-primary transition-colors">{task}</span>
+                      </label>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
@@ -289,37 +308,38 @@ export default function Home() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold">Connection Building</h3>
-                      <p className="text-xs text-muted-foreground">0/6 completed (0%)</p>
+                      <p className="text-xs text-muted-foreground">
+                        {connectionTasks.filter(t => t).length}/6 completed ({Math.round((connectionTasks.filter(t => t).length / 6) * 100)}%)
+                      </p>
                     </div>
                   </div>
                   <div className="w-full bg-muted rounded-full h-2 mb-6">
-                    <div className="bg-primary h-2 rounded-full" style={{width: '0%'}}></div>
+                    <div className="bg-primary h-2 rounded-full transition-all duration-300" 
+                         style={{width: `${(connectionTasks.filter(t => t).length / 6) * 100}%`}}></div>
                   </div>
                   <div className="space-y-3">
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Connect with all classmates and professors</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Find and connect with alumni from your college</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Connect with professionals in target companies</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Join relevant LinkedIn groups in your field</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Reach out to 5 new connections weekly</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Send personalized connection requests</span>
-                    </label>
+                    {[
+                      "Connect with all classmates and professors",
+                      "Find and connect with alumni from your college",
+                      "Connect with professionals in target companies",
+                      "Join relevant LinkedIn groups in your field",
+                      "Reach out to 5 new connections weekly",
+                      "Send personalized connection requests"
+                    ].map((task, index) => (
+                      <label key={index} className="flex items-start gap-3 cursor-pointer group">
+                        <input 
+                          type="checkbox" 
+                          className="mt-1 rounded border-muted-foreground" 
+                          checked={connectionTasks[index]}
+                          onChange={() => {
+                            const newTasks = [...connectionTasks];
+                            newTasks[index] = !newTasks[index];
+                            setConnectionTasks(newTasks);
+                          }}
+                        />
+                        <span className="text-sm group-hover:text-primary transition-colors">{task}</span>
+                      </label>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
@@ -333,37 +353,38 @@ export default function Home() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold">Content Posting</h3>
-                      <p className="text-xs text-muted-foreground">0/6 completed (0%)</p>
+                      <p className="text-xs text-muted-foreground">
+                        {contentTasks.filter(t => t).length}/6 completed ({Math.round((contentTasks.filter(t => t).length / 6) * 100)}%)
+                      </p>
                     </div>
                   </div>
                   <div className="w-full bg-muted rounded-full h-2 mb-6">
-                    <div className="bg-primary h-2 rounded-full" style={{width: '0%'}}></div>
+                    <div className="bg-primary h-2 rounded-full transition-all duration-300" 
+                         style={{width: `${(contentTasks.filter(t => t).length / 6) * 100}%`}}></div>
                   </div>
                   <div className="space-y-3">
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Write your first introduction post</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Share a project you're working on</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Post about something new you learned</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Share an industry article with your thoughts</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Create a weekly posting schedule</span>
-                    </label>
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
-                      <span className="text-sm group-hover:text-primary transition-colors">Engage with 5 posts daily (comments, not just likes)</span>
-                    </label>
+                    {[
+                      "Write your first introduction post",
+                      "Share a project you're working on",
+                      "Post about something new you learned",
+                      "Share an industry article with your thoughts",
+                      "Create a weekly posting schedule",
+                      "Engage with 5 posts daily (comments, not just likes)"
+                    ].map((task, index) => (
+                      <label key={index} className="flex items-start gap-3 cursor-pointer group">
+                        <input 
+                          type="checkbox" 
+                          className="mt-1 rounded border-muted-foreground" 
+                          checked={contentTasks[index]}
+                          onChange={() => {
+                            const newTasks = [...contentTasks];
+                            newTasks[index] = !newTasks[index];
+                            setContentTasks(newTasks);
+                          }}
+                        />
+                        <span className="text-sm group-hover:text-primary transition-colors">{task}</span>
+                      </label>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
@@ -565,7 +586,7 @@ export default function Home() {
               <p className="text-lg text-muted-foreground">Track your daily posts and build consistency</p>
               <div className="mt-6 inline-flex items-center gap-4 bg-card/95 backdrop-blur px-6 py-3 rounded-full shadow-lg">
                 <span className="text-sm font-medium">Current Streak:</span>
-                <span className="text-2xl font-bold text-primary">0 days</span>
+                <span className="text-2xl font-bold text-primary">{completedDays.length} days</span>
               </div>
             </div>
             
@@ -580,15 +601,34 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="grid grid-cols-7 gap-3">
-                  {Array.from({ length: 21 }, (_, i) => i + 1).map(day => (
-                    <div
-                      key={day}
-                      className="aspect-square border-2 border-dashed border-muted-foreground/20 rounded-lg flex flex-col items-center justify-center hover:border-primary/50 transition-all cursor-pointer group"
-                    >
-                      <span className="text-lg font-semibold text-muted-foreground group-hover:text-primary">Day</span>
-                      <span className="text-2xl font-bold text-muted-foreground/50 group-hover:text-primary">{day}</span>
-                    </div>
-                  ))}
+                  {Array.from({ length: 21 }, (_, i) => i + 1).map(day => {
+                    const isCompleted = completedDays.includes(day);
+                    const today = completedDays.length + 1 === day && completedDays.length > 0;
+                    
+                    return (
+                      <div
+                        key={day}
+                        onClick={() => toggleDay(day)}
+                        className={`aspect-square border-2 rounded-lg flex flex-col items-center justify-center transition-all cursor-pointer group ${
+                          isCompleted 
+                            ? 'bg-primary border-primary text-white hover:bg-primary/90' 
+                            : today 
+                              ? 'bg-yellow-500/20 border-yellow-500 hover:bg-yellow-500/30'
+                              : 'border-dashed border-muted-foreground/20 hover:border-primary/50'
+                        }`}
+                      >
+                        <span className={`text-lg font-semibold ${
+                          isCompleted ? 'text-white' : 'text-muted-foreground group-hover:text-primary'
+                        }`}>Day</span>
+                        <span className={`text-2xl font-bold ${
+                          isCompleted ? 'text-white' : 'text-muted-foreground/50 group-hover:text-primary'
+                        }`}>{day}</span>
+                        {isCompleted && (
+                          <Check className="h-5 w-5 text-white mt-1" />
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
                 
                 <div className="mt-8 p-6 bg-muted/30 rounded-lg">
