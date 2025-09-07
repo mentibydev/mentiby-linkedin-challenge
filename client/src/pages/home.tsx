@@ -7,7 +7,8 @@ import heroImage from "@assets/generated_images/LinkedIn_networking_illustration
 import studentsImage from "@assets/generated_images/Students_posting_on_LinkedIn_e4f60e13.png";
 import { 
   Calendar, 
-  Users, 
+  Users,
+  User, 
   Trophy, 
   Edit, 
   Heart, 
@@ -100,7 +101,7 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
-  const sections = ["home", "rules", "templates", "cta"];
+  const sections = ["home", "action-plan", "rules", "templates", "tracker", "cta"];
 
   useEffect(() => {
     let filtered = samplePosts;
@@ -169,9 +170,11 @@ export default function Home() {
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <button onClick={() => scrollToSection(0)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Home</button>
-              <button onClick={() => scrollToSection(1)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Rules</button>
-              <button onClick={() => scrollToSection(2)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Templates</button>
-              <Button size="sm" onClick={() => scrollToSection(3)} data-testid="button-get-started">
+              <button onClick={() => scrollToSection(1)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Action Plan</button>
+              <button onClick={() => scrollToSection(2)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Rules</button>
+              <button onClick={() => scrollToSection(3)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Templates</button>
+              <button onClick={() => scrollToSection(4)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Tracker</button>
+              <Button size="sm" onClick={() => scrollToSection(5)} data-testid="button-get-started">
                 Get Started
               </Button>
             </div>
@@ -214,7 +217,7 @@ export default function Home() {
                     Start Challenge
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-                  <Button variant="outline" size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" onClick={() => scrollToSection(2)} data-testid="button-view-templates">
+                  <Button variant="outline" size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" onClick={() => scrollToSection(3)} data-testid="button-view-templates">
                     View Templates
                   </Button>
                 </div>
@@ -223,7 +226,152 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 2: Rules */}
+        {/* Section 2: LinkedIn Action Plan */}
+        <section className="min-w-full h-full flex items-center justify-center bg-muted/10 relative" style={{ scrollSnapAlign: 'start' }}>
+          <div className="absolute inset-0 bg-dot-pattern opacity-5"></div>
+          <div className="max-w-6xl mx-auto px-6 w-full py-16">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-foreground mb-4 animate-fade-in">Your LinkedIn Action Plan</h2>
+              <p className="text-lg text-muted-foreground">Complete these tasks to build your professional presence</p>
+            </div>
+            
+            <div className="grid lg:grid-cols-3 gap-8">
+              {/* Profile Setup */}
+              <Card className="p-6 bg-card/95 backdrop-blur border-2 hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-0">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <User className="h-5 w-5 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold">Profile Setup</h3>
+                      <p className="text-xs text-muted-foreground">0/6 completed (0%)</p>
+                    </div>
+                  </div>
+                  <div className="w-full bg-muted rounded-full h-2 mb-6">
+                    <div className="bg-primary h-2 rounded-full" style={{width: '0%'}}></div>
+                  </div>
+                  <div className="space-y-3">
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Upload a professional headshot photo</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Write a compelling headline with keywords</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Craft a detailed summary (3-4 paragraphs)</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Add your education and relevant coursework</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">List your technical skills and endorsements</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Add projects with descriptions and links</span>
+                    </label>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Connection Building */}
+              <Card className="p-6 bg-card/95 backdrop-blur border-2 hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-0">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Users className="h-5 w-5 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold">Connection Building</h3>
+                      <p className="text-xs text-muted-foreground">0/6 completed (0%)</p>
+                    </div>
+                  </div>
+                  <div className="w-full bg-muted rounded-full h-2 mb-6">
+                    <div className="bg-primary h-2 rounded-full" style={{width: '0%'}}></div>
+                  </div>
+                  <div className="space-y-3">
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Connect with all classmates and professors</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Find and connect with alumni from your college</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Connect with professionals in target companies</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Join relevant LinkedIn groups in your field</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Reach out to 5 new connections weekly</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Send personalized connection requests</span>
+                    </label>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Content Posting */}
+              <Card className="p-6 bg-card/95 backdrop-blur border-2 hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-0">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Edit className="h-5 w-5 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold">Content Posting</h3>
+                      <p className="text-xs text-muted-foreground">0/6 completed (0%)</p>
+                    </div>
+                  </div>
+                  <div className="w-full bg-muted rounded-full h-2 mb-6">
+                    <div className="bg-primary h-2 rounded-full" style={{width: '0%'}}></div>
+                  </div>
+                  <div className="space-y-3">
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Write your first introduction post</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Share a project you're working on</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Post about something new you learned</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Share an industry article with your thoughts</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Create a weekly posting schedule</span>
+                    </label>
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input type="checkbox" className="mt-1 rounded border-muted-foreground" />
+                      <span className="text-sm group-hover:text-primary transition-colors">Engage with 5 posts daily (comments, not just likes)</span>
+                    </label>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3: Rules */}
         <section className="min-w-full h-full flex items-center justify-center relative" style={{ scrollSnapAlign: 'start' }}>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent"></div>
           <div className="relative max-w-5xl mx-auto px-6 w-full flex flex-col justify-center h-full py-20">
@@ -340,7 +488,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 3: Templates */}
+        {/* Section 4: Templates */}
         <section className="min-w-full h-full flex items-center justify-center bg-muted/30 relative overflow-hidden" style={{ scrollSnapAlign: 'start' }}>
           <div className="absolute inset-0 bg-wave-pattern opacity-5"></div>
           <div className="max-w-6xl mx-auto px-6 w-full">
@@ -408,7 +556,79 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Section 4: Call to Action */}
+        {/* Section 5: 21-Day Progress Tracker */}
+        <section className="min-w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/5 to-accent/5 relative" style={{ scrollSnapAlign: 'start' }}>
+          <div className="absolute inset-0 bg-wave-pattern opacity-5"></div>
+          <div className="max-w-6xl mx-auto px-6 w-full py-16">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-foreground mb-4 animate-fade-in">21-Day Challenge Tracker</h2>
+              <p className="text-lg text-muted-foreground">Track your daily posts and build consistency</p>
+              <div className="mt-6 inline-flex items-center gap-4 bg-card/95 backdrop-blur px-6 py-3 rounded-full shadow-lg">
+                <span className="text-sm font-medium">Current Streak:</span>
+                <span className="text-2xl font-bold text-primary">0 days</span>
+              </div>
+            </div>
+            
+            {/* Calendar Grid */}
+            <Card className="p-8 bg-card/95 backdrop-blur shadow-xl">
+              <CardContent className="p-0">
+                <div className="grid grid-cols-7 gap-3 mb-6">
+                  {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                    <div key={day} className="text-center text-sm font-semibold text-muted-foreground">
+                      {day}
+                    </div>
+                  ))}
+                </div>
+                <div className="grid grid-cols-7 gap-3">
+                  {Array.from({ length: 21 }, (_, i) => i + 1).map(day => (
+                    <div
+                      key={day}
+                      className="aspect-square border-2 border-dashed border-muted-foreground/20 rounded-lg flex flex-col items-center justify-center hover:border-primary/50 transition-all cursor-pointer group"
+                    >
+                      <span className="text-lg font-semibold text-muted-foreground group-hover:text-primary">Day</span>
+                      <span className="text-2xl font-bold text-muted-foreground/50 group-hover:text-primary">{day}</span>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="mt-8 p-6 bg-muted/30 rounded-lg">
+                  <h4 className="font-semibold mb-4">How to use this tracker:</h4>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-start gap-2">
+                      <Check className="h-4 w-4 text-primary mt-0.5" />
+                      <span>Click on each day after you've made your LinkedIn post</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="h-4 w-4 text-primary mt-0.5" />
+                      <span>Track your progress and maintain your streak</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check className="h-4 w-4 text-primary mt-0.5" />
+                      <span>Complete all 21 days to unlock rewards!</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="mt-6 flex justify-center gap-6">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-muted-foreground/20 rounded"></div>
+                    <span className="text-sm text-muted-foreground">Not started</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-primary rounded"></div>
+                    <span className="text-sm text-muted-foreground">Completed</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-yellow-500 rounded"></div>
+                    <span className="text-sm text-muted-foreground">Today</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Section 6: Call to Action */}
         <section className="min-w-full h-full flex items-center justify-center relative overflow-hidden" style={{ scrollSnapAlign: 'start' }}>
           <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent"></div>
           <div className="absolute inset-0 bg-dot-pattern opacity-10"></div>
@@ -446,7 +666,7 @@ export default function Home() {
                   size="lg" 
                   variant="secondary" 
                   className="h-14 px-8 text-lg hover:scale-105 transition-transform" 
-                  onClick={() => scrollToSection(1)}
+                  onClick={() => scrollToSection(2)}
                   data-testid="button-start-today"
                 >
                   View Challenge Rules
