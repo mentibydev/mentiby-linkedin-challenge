@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import heroImage from "@assets/generated_images/LinkedIn_networking_illustration_0bf02720.png";
@@ -16,13 +15,15 @@ import {
   Copy, 
   Check,
   ArrowRight,
-  BookOpen,
+  ArrowLeft,
   Target,
   Star,
   ThumbsUp,
   UserPlus,
   Award,
-  Lightbulb
+  Lightbulb,
+  ChevronRight,
+  ChevronLeft
 } from "lucide-react";
 
 interface SamplePost {
@@ -93,9 +94,13 @@ const samplePosts: SamplePost[] = [
 ];
 
 export default function Home() {
+  const [currentSection, setCurrentSection] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filteredPosts, setFilteredPosts] = useState(samplePosts);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  const sections = ["home", "stats", "rules", "templates", "cta"];
 
   useEffect(() => {
     let filtered = samplePosts;
@@ -130,11 +135,31 @@ export default function Home() {
     { id: "motivation", label: "Motivation" }
   ];
 
+  const scrollToSection = (index: number) => {
+    if (containerRef.current) {
+      const sectionWidth = window.innerWidth;
+      containerRef.current.scrollTo({
+        left: sectionWidth * index,
+        behavior: 'smooth'
+      });
+      setCurrentSection(index);
+    }
+  };
+
+  const handleScroll = () => {
+    if (containerRef.current) {
+      const scrollLeft = containerRef.current.scrollLeft;
+      const sectionWidth = window.innerWidth;
+      const newSection = Math.round(scrollLeft / sectionWidth);
+      setCurrentSection(newSection);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Navigation */}
-      <nav className="bg-background/95 backdrop-blur-sm border-b border-border/50 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-6">
+    <div className="relative h-screen overflow-hidden bg-background">
+      {/* Fixed Navigation */}
+      <nav className="fixed top-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-b border-border/50 z-50">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
@@ -143,9 +168,10 @@ export default function Home() {
               <span className="text-xl font-bold text-foreground">MentiBY LinkedIn Challenge</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#rules" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Rules</a>
-              <a href="#templates" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Templates</a>
-              <Button size="sm" data-testid="button-get-started">
+              <button onClick={() => scrollToSection(0)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Home</button>
+              <button onClick={() => scrollToSection(2)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Rules</button>
+              <button onClick={() => scrollToSection(3)} className="text-muted-foreground hover:text-foreground transition-colors text-sm">Templates</button>
+              <Button size="sm" onClick={() => scrollToSection(4)} data-testid="button-get-started">
                 Get Started
               </Button>
             </div>
@@ -153,300 +179,331 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative py-24 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10"></div>
-        <div className="absolute inset-0 bg-dot-pattern opacity-5"></div>
-        <div className="relative max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-center lg:text-left">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-8 leading-tight animate-fade-in">
-                MentiBY LinkedIn Challenge
-              </h1>
-              <p className="text-2xl sm:text-3xl text-muted-foreground mb-6 font-light">
-                Build your LinkedIn presence and get noticed by employers
-              </p>
-              <p className="text-lg text-muted-foreground/80 mb-12">
-                Daily posting challenge for CS students at MentiBY
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
-                <Button size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" data-testid="button-start-challenge">
-                  Start Challenge
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-                <Button variant="outline" size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" data-testid="button-view-templates">
-                  View Templates
-                </Button>
+      {/* Horizontal Scroll Container */}
+      <div 
+        ref={containerRef}
+        onScroll={handleScroll}
+        className="horizontal-scroll-container"
+        style={{
+          display: 'flex',
+          overflowX: 'auto',
+          overflowY: 'hidden',
+          scrollSnapType: 'x mandatory',
+          height: '100vh',
+          paddingTop: '64px'
+        }}
+      >
+        {/* Section 1: Hero */}
+        <section className="min-w-full h-full flex items-center justify-center relative" style={{ scrollSnapAlign: 'start' }}>
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10"></div>
+          <div className="absolute inset-0 bg-dot-pattern opacity-5"></div>
+          <div className="relative max-w-7xl mx-auto px-6 w-full">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="text-center lg:text-left">
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-8 leading-tight animate-fade-in">
+                  MentiBY LinkedIn Challenge
+                </h1>
+                <p className="text-2xl sm:text-3xl text-muted-foreground mb-6 font-light">
+                  Build your LinkedIn presence and get noticed by employers
+                </p>
+                <p className="text-lg text-muted-foreground/80 mb-12">
+                  Daily posting challenge for CS students at MentiBY
+                </p>
+                <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+                  <Button size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" onClick={() => scrollToSection(2)} data-testid="button-start-challenge">
+                    Start Challenge
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                  <Button variant="outline" size="lg" className="h-14 px-8 text-lg hover:scale-105 transition-transform" onClick={() => scrollToSection(3)} data-testid="button-view-templates">
+                    View Templates
+                  </Button>
+                </div>
+              </div>
+              <div className="relative hidden lg:block">
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-3xl"></div>
+                <img 
+                  src={heroImage} 
+                  alt="Professional networking on LinkedIn" 
+                  className="rounded-3xl shadow-2xl w-full h-auto animate-float"
+                />
               </div>
             </div>
-            <div className="relative hidden lg:block">
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-3xl"></div>
-              <img 
-                src={heroImage} 
-                alt="Professional networking on LinkedIn" 
-                className="rounded-3xl shadow-2xl w-full h-auto animate-float"
-              />
+          </div>
+        </section>
+
+        {/* Section 2: Stats */}
+        <section className="min-w-full h-full flex items-center justify-center bg-muted/20" style={{ scrollSnapAlign: 'start' }}>
+          <div className="max-w-6xl mx-auto px-6 w-full">
+            <h2 className="text-4xl font-bold text-center mb-16 animate-fade-in">Our Impact</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+              <div className="group bg-card p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all">
+                <div className="text-5xl font-bold text-primary mb-4 group-hover:scale-110 transition-transform">500+</div>
+                <p className="text-lg text-muted-foreground">Active Students</p>
+              </div>
+              <div className="group bg-card p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all">
+                <div className="text-5xl font-bold text-primary mb-4 group-hover:scale-110 transition-transform">15K+</div>
+                <p className="text-lg text-muted-foreground">Posts Created</p>
+              </div>
+              <div className="group bg-card p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all">
+                <div className="text-5xl font-bold text-primary mb-4 group-hover:scale-110 transition-transform">89%</div>
+                <p className="text-lg text-muted-foreground">Got Internships</p>
+              </div>
+              <div className="group bg-card p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all">
+                <div className="text-5xl font-bold text-primary mb-4 group-hover:scale-110 transition-transform">30+</div>
+                <p className="text-lg text-muted-foreground">Days Average Streak</p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-
-      {/* Stats Section */}
-      <section className="py-16 bg-muted/20">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8 text-center">
-            <div className="group">
-              <div className="text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">500+</div>
-              <p className="text-muted-foreground">Active Students</p>
+        {/* Section 3: Rules */}
+        <section className="min-w-full h-full flex items-center justify-center relative" style={{ scrollSnapAlign: 'start' }}>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent"></div>
+          <div className="relative max-w-5xl mx-auto px-6 w-full">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-foreground mb-4 animate-fade-in">Challenge Rules</h2>
+              <p className="text-lg text-muted-foreground">Simple guidelines to maximize your success</p>
             </div>
-            <div className="group">
-              <div className="text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">15K+</div>
-              <p className="text-muted-foreground">Posts Created</p>
-            </div>
-            <div className="group">
-              <div className="text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">89%</div>
-              <p className="text-muted-foreground">Got Internships</p>
-            </div>
-            <div className="group">
-              <div className="text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">30+</div>
-              <p className="text-muted-foreground">Days Average Streak</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Rules Section */}
-      <section id="rules" className="py-20 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent"></div>
-        <div className="relative max-w-5xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-foreground mb-4 animate-fade-in">Challenge Rules</h2>
-            <p className="text-muted-foreground">Simple guidelines to maximize your success</p>
-          </div>
-          
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Rule 1: Daily Posting */}
-            <Card className="p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
-              <CardContent className="p-0">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Edit className="text-primary h-6 w-6" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-foreground mb-3">1️⃣ Daily Posting</h3>
-                    <p className="text-muted-foreground mb-4">Post 1 update daily on LinkedIn</p>
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Check className="text-primary h-4 w-4" />
-                        <span className="text-sm text-foreground">What you learned in class/project</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Check className="text-primary h-4 w-4" />
-                        <span className="text-sm text-foreground">A coding problem you solved</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Check className="text-primary h-4 w-4" />
-                        <span className="text-sm text-foreground">An error/bug you faced and solved</span>
+            
+            <div className="grid lg:grid-cols-2 gap-6 max-h-[60vh] overflow-y-auto px-4">
+              {/* Rule 1: Daily Posting */}
+              <Card className="p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+                <CardContent className="p-0">
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Edit className="text-primary h-6 w-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-semibold text-foreground mb-3">1️⃣ Daily Posting</h3>
+                      <p className="text-muted-foreground mb-4">Post 1 update daily on LinkedIn</p>
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2">
+                          <Check className="text-primary h-4 w-4" />
+                          <span className="text-sm text-foreground">What you learned in class/project</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Check className="text-primary h-4 w-4" />
+                          <span className="text-sm text-foreground">A coding problem you solved</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Check className="text-primary h-4 w-4" />
+                          <span className="text-sm text-foreground">An error/bug you faced and solved</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            {/* Rule 2: Engagement */}
-            <Card className="p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
-              <CardContent className="p-0">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Heart className="text-primary h-6 w-6" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-foreground mb-3">2️⃣ Engagement</h3>
-                    <p className="text-muted-foreground mb-4">Connect with 5+ professionals daily</p>
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <ThumbsUp className="text-primary h-4 w-4" />
-                        <span className="text-sm text-foreground">Like and comment on posts</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <UserPlus className="text-primary h-4 w-4" />
-                        <span className="text-sm text-foreground">Send personalized connection requests</span>
+              {/* Rule 2: Engagement */}
+              <Card className="p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+                <CardContent className="p-0">
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Heart className="text-primary h-6 w-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-semibold text-foreground mb-3">2️⃣ Engagement</h3>
+                      <p className="text-muted-foreground mb-4">Connect with 5+ professionals daily</p>
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2">
+                          <ThumbsUp className="text-primary h-4 w-4" />
+                          <span className="text-sm text-foreground">Like and comment on posts</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <UserPlus className="text-primary h-4 w-4" />
+                          <span className="text-sm text-foreground">Send personalized connection requests</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            {/* Rule 3: Sample Posts */}
-            <Card className="p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
-              <CardContent className="p-0">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <FileText className="text-primary h-6 w-6" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-foreground mb-3">3️⃣ Sample Posts</h3>
-                    <p className="text-muted-foreground mb-4">Use ready-made templates when stuck</p>
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Lightbulb className="text-primary h-4 w-4" />
-                        <span className="text-sm text-foreground">"Today I learned..." updates</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Target className="text-primary h-4 w-4" />
-                        <span className="text-sm text-foreground">"Error faced & solved" posts</span>
+              {/* Rule 3: Sample Posts */}
+              <Card className="p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+                <CardContent className="p-0">
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <FileText className="text-primary h-6 w-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-semibold text-foreground mb-3">3️⃣ Sample Posts</h3>
+                      <p className="text-muted-foreground mb-4">Use ready-made templates when stuck</p>
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2">
+                          <Lightbulb className="text-primary h-4 w-4" />
+                          <span className="text-sm text-foreground">"Today I learned..." updates</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Target className="text-primary h-4 w-4" />
+                          <span className="text-sm text-foreground">"Error faced & solved" posts</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            {/* Rule 4: Rewards */}
-            <Card className="p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
-              <CardContent className="p-0">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Award className="text-primary h-6 w-6" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-foreground mb-3">4️⃣ Rewards</h3>
-                    <p className="text-muted-foreground mb-4">Outstanding posts get recognition</p>
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Star className="text-primary h-4 w-4" />
-                        <span className="text-sm text-foreground">Featured on MentiBY's page</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Trophy className="text-primary h-4 w-4" />
-                        <span className="text-sm text-foreground">Special rewards for consistency</span>
+              {/* Rule 4: Rewards */}
+              <Card className="p-6 border-l-4 border-l-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+                <CardContent className="p-0">
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Award className="text-primary h-6 w-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-semibold text-foreground mb-3">4️⃣ Rewards</h3>
+                      <p className="text-muted-foreground mb-4">Outstanding posts get recognition</p>
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2">
+                          <Star className="text-primary h-4 w-4" />
+                          <span className="text-sm text-foreground">Featured on MentiBY's page</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Trophy className="text-primary h-4 w-4" />
+                          <span className="text-sm text-foreground">Special rewards for consistency</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Templates Section */}
-      <section id="templates" className="py-20 bg-muted/30 relative overflow-hidden">
-        <div className="absolute inset-0 bg-wave-pattern opacity-5"></div>
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4 animate-fade-in">Post Templates</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Never run out of content ideas! Browse our curated collection and copy templates to your clipboard.
-            </p>
-          </div>
+        {/* Section 4: Templates */}
+        <section className="min-w-full h-full flex items-center justify-center bg-muted/30 relative overflow-hidden" style={{ scrollSnapAlign: 'start' }}>
+          <div className="absolute inset-0 bg-wave-pattern opacity-5"></div>
+          <div className="max-w-6xl mx-auto px-6 w-full">
+            <div className="text-center mb-8">
+              <h2 className="text-4xl font-bold text-foreground mb-4 animate-fade-in">Post Templates</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Never run out of content ideas! Browse our curated collection and copy templates to your clipboard.
+              </p>
+            </div>
 
-          {/* Filter */}
-          <div className="mb-8">
-            <div className="flex flex-wrap justify-center gap-2">
-              {categories.map((category) => (
-                <Button
-                  key={category.id}
-                  variant={selectedCategory === category.id ? "default" : "secondary"}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category.id)}
-                  className="rounded-full"
-                  data-testid={`filter-${category.id}`}
-                >
-                  {category.label}
-                </Button>
+            {/* Filter */}
+            <div className="mb-6">
+              <div className="flex flex-wrap justify-center gap-2">
+                {categories.map((category) => (
+                  <Button
+                    key={category.id}
+                    variant={selectedCategory === category.id ? "default" : "secondary"}
+                    size="sm"
+                    onClick={() => setSelectedCategory(category.id)}
+                    className="rounded-full"
+                    data-testid={`filter-${category.id}`}
+                  >
+                    {category.label}
+                  </Button>
+                ))}
+              </div>
+            </div>
+
+            {/* Templates Grid - Scrollable */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[50vh] overflow-y-auto px-2">
+              {filteredPosts.map((post) => (
+                <Card key={post.id} className="p-4 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group bg-card/95 backdrop-blur" data-testid={`card-post-${post.id}`}>
+                  <CardContent className="p-0">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex-1">
+                        <h3 className="text-base font-semibold text-foreground mb-1">{post.title}</h3>
+                        <Badge variant="secondary" className="bg-primary/10 text-primary text-xs">
+                          {post.category}
+                        </Badge>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => copyToClipboard(post.template)}
+                        className="text-muted-foreground hover:text-primary p-1"
+                        data-testid={`button-copy-${post.id}`}
+                      >
+                        <Copy className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <p className="text-muted-foreground text-xs mb-3">{post.description}</p>
+                    <Button
+                      onClick={() => copyToClipboard(post.template)}
+                      className="w-full h-8 text-xs"
+                      size="sm"
+                      data-testid={`button-copy-template-${post.id}`}
+                    >
+                      <Copy className="mr-1 h-3 w-3" />
+                      Copy Template
+                    </Button>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </div>
+        </section>
 
-          {/* Templates Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPosts.map((post) => (
-              <Card key={post.id} className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group bg-card/95 backdrop-blur" data-testid={`card-post-${post.id}`}>
-                <CardContent className="p-0">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-foreground mb-2">{post.title}</h3>
-                      <Badge variant="secondary" className="bg-primary/10 text-primary">
-                        {post.category}
-                      </Badge>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => copyToClipboard(post.template)}
-                      className="text-muted-foreground hover:text-primary"
-                      data-testid={`button-copy-${post.id}`}
-                    >
-                      <Copy className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  <p className="text-muted-foreground text-sm mb-4">{post.description}</p>
-                  <div className="bg-muted p-4 rounded-lg mb-4">
-                    <p className="text-sm text-foreground font-mono leading-relaxed">{post.template}</p>
-                  </div>
-                  <Button
-                    onClick={() => copyToClipboard(post.template)}
-                    className="w-full"
-                    size="sm"
-                    data-testid={`button-copy-template-${post.id}`}
-                  >
-                    <Copy className="mr-2 h-4 w-4" />
-                    Copy Template
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent"></div>
-        <div className="absolute inset-0 bg-dot-pattern opacity-10"></div>
-        <div className="relative max-w-5xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-center lg:text-left">
-              <h2 className="text-3xl font-bold mb-4 text-white animate-fade-in">Ready to Level Up Your Career?</h2>
-              <p className="text-xl mb-8 text-white/90">
-                Join hundreds of MentiBY students already building their professional network
-              </p>
-              <Button size="lg" variant="secondary" className="h-14 px-8 text-lg hover:scale-105 transition-transform" data-testid="button-start-today">
-                Start Your Challenge Today
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
-            <div className="relative hidden lg:block">
-              <img 
-                src={studentsImage} 
-                alt="Students succeeding with LinkedIn" 
-                className="rounded-2xl shadow-2xl w-full h-auto"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-card border-t border-border py-12">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-3 mb-4 md:mb-0">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">LC</span>
+        {/* Section 5: Call to Action */}
+        <section className="min-w-full h-full flex items-center justify-center relative overflow-hidden" style={{ scrollSnapAlign: 'start' }}>
+          <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent"></div>
+          <div className="absolute inset-0 bg-dot-pattern opacity-10"></div>
+          <div className="relative max-w-5xl mx-auto px-6 w-full">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="text-center lg:text-left">
+                <h2 className="text-4xl font-bold mb-6 text-white animate-fade-in">Ready to Level Up Your Career?</h2>
+                <p className="text-xl mb-8 text-white/90">
+                  Join hundreds of MentiBY students already building their professional network
+                </p>
+                <Button size="lg" variant="secondary" className="h-14 px-8 text-lg hover:scale-105 transition-transform" data-testid="button-start-today">
+                  Start Your Challenge Today
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
               </div>
-              <span className="text-lg font-bold text-foreground">MentiBY LinkedIn Challenge</span>
+              <div className="relative hidden lg:block">
+                <img 
+                  src={studentsImage} 
+                  alt="Students succeeding with LinkedIn" 
+                  className="rounded-2xl shadow-2xl w-full h-auto"
+                />
+              </div>
             </div>
-            <p className="text-muted-foreground text-sm text-center md:text-right">
-              © 2025 MentiBY LinkedIn Challenge. Empowering students to build professional networks.
-            </p>
           </div>
-        </div>
-      </footer>
+        </section>
+      </div>
+
+      {/* Navigation Dots */}
+      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-50">
+        {sections.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => scrollToSection(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              currentSection === index 
+                ? 'bg-primary w-8' 
+                : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+            }`}
+            aria-label={`Go to section ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Navigation Arrows */}
+      {currentSection > 0 && (
+        <button
+          onClick={() => scrollToSection(currentSection - 1)}
+          className="fixed left-4 top-1/2 transform -translate-y-1/2 z-50 bg-background/80 backdrop-blur p-3 rounded-full shadow-lg hover:bg-background transition-all"
+          aria-label="Previous section"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+      )}
+      {currentSection < sections.length - 1 && (
+        <button
+          onClick={() => scrollToSection(currentSection + 1)}
+          className="fixed right-4 top-1/2 transform -translate-y-1/2 z-50 bg-background/80 backdrop-blur p-3 rounded-full shadow-lg hover:bg-background transition-all"
+          aria-label="Next section"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
+      )}
     </div>
   );
 }

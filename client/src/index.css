@@ -182,3 +182,24 @@
 .group:hover .group-hover\:scale-110 {
   transform: scale(1.1);
 }
+
+/* Horizontal Scrolling */
+.horizontal-scroll-container {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent vertical scroll on body */
+body {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
